@@ -51,9 +51,10 @@ def clean_data(df):
     
     df=df.merge(categories,on='id')
     
-    df = df.drop_duplicates(subset='id', keep='first')
     
     df.drop('categories',axis=1,inplace=True)
+    
+    df = df.drop_duplicates( keep='first')
     
     
     return df
