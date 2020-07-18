@@ -1,11 +1,9 @@
 import sys
 
-# Import libraries
 import pandas as pd
 import numpy as np
 from sqlalchemy import create_engine
 
-# ML libraries
 import pickle
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
@@ -22,8 +20,6 @@ from sklearn.metrics import confusion_matrix
 
 from sklearn.metrics import classification_report, f1_score, precision_score, recall_score, accuracy_score
 
-
-# NLP libraries
 import re
 import nltk 
 from nltk.corpus import stopwords
@@ -79,36 +75,42 @@ def build_model():
     
     pipeline=Pipeline([
 
-    ('vect',CountVectorizer()),
+    ('vect',CountVectorizer(tokenizer=tokenize_data)),
     ('tfidf',TfidfTransformer()),
     ('clf', MultiOutputClassifier(estimator=RandomForestClassifier(random_state=101)))
         
     ])
     
     parameter_grid = {
-        'tfidf__norm':['l2','l1'],
-        'clf__estimator__min_samples_split':[2,3]
-    
+#        'vect__max_df': (0.5, 0.75, 1.0),
+#        'vect__max_features': (None, 5000, 10000),
+        'tfidf__use_idf': (True, False),
+        'clf__estimator__n_estimators': [ 10,15,20],
+       'clf__estimator__min_samples_split': [2, 3],
     }
 
-    model=GridSearchCV(estimator=pipeline, param_grid=parameter_grid,n_jobs=1)
+    model=GridSearchCV(estimator=pipeline, param_grid=parameter_grid,n_jobs=1,verbose=3)
 
 
     return model
 
 
 
-def evaluate_model(model, X_test, y_test, category_names):
-    y_pred = model.predict(X_test)
-    for i, col in enumerate(category_names): 
-        print('***********',col,'***********')
-        print(classification_report(y_test.iloc[:,i], y_pred[:,i]))
+def estimate_model(model, X_test, y_test):
+    
+    y_predictions=model.predict(X_test)
+    for i,col in enumerate(y_test.columns):
         
+        print(col,'--------------------')
+        print(classification_report(y_test.iloc[:, i], y_predictions[:, i]))
         
         
 def save_model(model, model_filepath):
     
     pickle.dump(model, open(model_filepath, 'wb'))
+    
+    #'wb' means 'write binary' 
+    # writes the pickeled data into a file. 
     
     
     
@@ -127,7 +129,7 @@ def main():
         model.fit(X_train, y_train)
         
         print('Evaluating model...')
-        evaluate_model(model, X_test, y_test, category_names)
+        estimate_model(model, X_test, y_test)
 
         print('Saving model...\n    MODEL: {}'.format(model_filepath))
         save_model(model, model_filepath)
