@@ -76,7 +76,7 @@ The ML Pipeline Preparation Notebook also includes a section dedicated to retrai
 3. Go to http://0.0.0.0:3001/
 
 
-![Screenshot of Web App](screenshots/results1.PNG)
+![Screenshot of Web App](screenshots/results1.png)
 
 
 ## License
