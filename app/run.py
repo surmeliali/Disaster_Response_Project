@@ -15,7 +15,7 @@ from sqlalchemy import create_engine
 app = Flask(__name__)
 
 
-def tokenize(text):
+def tokenize_data(text):
     tokens = word_tokenize(text)
     lemmatizer = WordNetLemmatizer()
 
@@ -75,6 +75,24 @@ def index():
                 }
             }
         },
+                {
+            'data': [
+                Bar(
+                    x=top_category_names,
+                    y=top_category_count
+                )
+            ],
+
+            'layout': {
+                'title': 'Top 5 Categories',
+                'yaxis': {
+                    'title': "Count"
+                },
+                'xaxis': {
+                    'title': "Categories"
+                }
+            }
+        },
         {
             'data': [
                 Bar(
@@ -93,24 +111,6 @@ def index():
                 }
             }
 
-        },
-        {
-            'data': [
-                Bar(
-                    x=top_category_names,
-                    y=top_category_count
-                )
-            ],
-
-            'layout': {
-                'title': 'Top 5 Categories',
-                'yaxis': {
-                    'title': "Count"
-                },
-                'xaxis': {
-                    'title': "Categories"
-                }
-            }
         }
     ]
     

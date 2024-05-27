@@ -29,7 +29,7 @@ nltk.download(['punkt', 'wordnet'])
 nltk.download('stopwords')
 
 
-'''Loads data from a given database.
+''' Loads data from a given database.
 Args:
     database_filepath: string, the database path for the data to be loaded
 Returns:
