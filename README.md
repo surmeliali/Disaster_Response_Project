@@ -1,11 +1,11 @@
 # Disaster Response Pipeline Project
 
 
-![Screenshot of Web App](screenshots/message0.PNG)
+![Screenshot of Web App](screenshots/message0.png)
 
 
 ## Table of Contents
-1. [Overview](#dependencies)
+1. [Overview](#overview)
 	* [Dependencies](#dependencies)
 	* [Key Files](#key_files)
 	* [Executing Program](#execution)
@@ -21,7 +21,7 @@ The aim is to utilize data engineering and machine learning skills to analyze di
 1. **Data Processing:** This involves constructing an ETL (Extract, Transform, Load) pipeline to extract data from the provided dataset, clean it, and store it in a SQLite database.
 2. **Machine Learning Pipeline:** The data is split into training and testing sets. A machine learning pipeline is then created using NLTK and scikit-learn's Pipeline and GridSearchCV to develop a final model that can classify messages into 36 categories.
 3. **Web Development:** A web application is developed to classify messages in real-time.
-![Screenshot of Web App](screenshots/overview.PNG)
+![Screenshot of Web App](screenshots/overview.png)
 
 The machine learning model uses a combination of CountVectorizer and TfidfTransformer to convert text messages into numerical features. It then employs a MultiOutputClassifier for multi-target classification. The model is tuned using GridSearchCV and evaluated for performance, particularly noting that the dataset's imbalance affects accuracy and recall. The final model is saved for deployment in a Dash-based web application, allowing users to input messages and receive real-time classification results, aiding disaster relief efforts by directing messages to the appropriate response agencies.
 
